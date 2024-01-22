@@ -8,8 +8,16 @@ import {
 } from './ContactsListItem.styled';
 import { FiPhone } from 'react-icons/fi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
+import { useDispatch } from 'react-redux';
+import { deleteContactAction } from 'store/slice';
 
-export const ContactsListItem = ({ name, number, id, deleteContact }) => {
+export const ContactsListItem = ({ name, number, id }) => {
+  const dispatch = useDispatch();
+
+  const deleteContact = id => {
+    dispatch(deleteContactAction(id));
+  };
+
   return (
     <ItemStyled>
       <FiPhone color="#ffffff" size="32px" title="phone icon" />

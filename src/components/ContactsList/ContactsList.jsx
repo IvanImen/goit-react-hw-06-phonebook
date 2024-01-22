@@ -1,19 +1,21 @@
 import { ContactsListItem } from 'components';
 import React from 'react';
 import { ListStyled } from './ContactsList.styled';
+import { useSelector } from 'react-redux';
 
-export const ContactsList = ({ contacts, deleteContact }) => {
+export const ContactsList = () => {
+  const contacts = useSelector(state => state.phonebook.contacts);
+  const filter = useSelector(state => state.phonebook.filter);
+
+  const filteredContacts = contacts.filter(({ name }) =>
+    name.toLowerCase().includes(filter)
+  );
+
   return (
     <ListStyled>
-      {contacts.map(({ id, name, number }) => {
+      {filteredContacts.map(({ id, name, number }) => {
         return (
-          <ContactsListItem
-            key={id}
-            name={name}
-            number={number}
-            id={id}
-            deleteContact={deleteContact}
-          />
+          <ContactsListItem key={id} name={name} number={number} id={id} />
         );
       })}
     </ListStyled>
